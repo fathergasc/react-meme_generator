@@ -24,14 +24,27 @@ export default function MemeGen() {
         console.log(memeImage)
     }
 
+    function handleChange(event) {
+        const {name, value} = event.target
+        setMemeImage(prevMemeImage => ({
+            ...prevMemeImage,
+            [name]: value
+        }))
+    }
+
     return (
         <main>
             <div className="input-wrap">
-                <input type="text" placeholder="Top Text"/>
-                <input type="text" placeholder="Bottom Text"/>
+                <input type="text" placeholder="Top Text" name="topText" value={memeImage.topText} onChange={handleChange}/>
+                <input type="text" placeholder="Bottom Text" name="bottomText" value={memeImage.bottomText}onChange={handleChange}/>
             </div>
             <button onClick={getRandomMeme}>Get a new meme template 🖼</button>
-            <img className="meme-img" src={memeImage.randomImage} alt="" />
+            <bottom className="meme">
+                <img className="meme-img" src={memeImage.randomImage} alt="" />
+                <h2 className="meme-text top">{memeImage.topText}</h2>
+                <h2 className="meme-text bottom">{memeImage.bottomText}</h2>
+            </bottom>
+            
         </main>
     )
 }
