@@ -38,7 +38,6 @@ header > span {
 main {
     margin: 0 auto;
     width: 768px;
-    background-color: red;
     padding: 2rem 0;
     display: flex;
     justify-content: center;

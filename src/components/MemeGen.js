@@ -1,6 +1,7 @@
 import React from "react";
 
-import memesArray from '../memes'
+//used before the previous solution without api call
+//import memesArray from '../memes'
 
 export default function MemeGen() {
 
@@ -10,16 +11,26 @@ export default function MemeGen() {
         randomImage:'http://i.imgflip.com/1bij.jpg',
     })
 
-    const [allMemes, setAllMemes] = React.useState(memesArray)
+    const [allMemes, setAllMemes] = React.useState([])
+
+    React.useEffect(() => {
+        async function getMemes() {
+            const response = await fetch('https://api.imgflip.com/get_memes')
+            const data = await response.json()
+            setAllMemes(data.data.memes)
+        }
+        getMemes()
+    }, [])
 
     function getRandomMeme() {
-        
-        const memes =  allMemes.data.memes;
-        const randomN = Math.floor(Math.random() * memes.length);
+
+        //used in previous solution, changed to 'allMemes' from 'memes' in following lines
+        //const memes =  allMemes.data.memes;
+        const randomN = Math.floor(Math.random() * allMemes.length);
         // () required for an implicit return in arrow functions
         setMemeImage(prevMemeImage => ({
             ...prevMemeImage,
-            randomImage: memes[randomN].url
+            randomImage: allMemes[randomN].url
             })) 
         console.log(memeImage)
     }
